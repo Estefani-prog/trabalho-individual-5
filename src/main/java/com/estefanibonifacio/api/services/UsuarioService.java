@@ -1,6 +1,7 @@
 package com.estefanibonifacio.api.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import com.estefanibonifacio.api.models.Usuario;
 import com.estefanibonifacio.api.repositories.UsuarioRepository;
@@ -25,5 +26,27 @@ public class UsuarioService {
     @Transactional
     public void save(Usuario usuario) {
         usuarioRepository.save(usuario);
+
     }
+    @Transactional
+    public Usuario findById(Long usuario) {
+        Optional<Usuario> user = usuarioRepository.findById(usuario); 
+    return user.orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+    }
+
+    @Transactional
+    public Usuario edit(Usuario usuario) {
+        Usuario userToEdit = findById(usuario.getId()); 
+        userToEdit.setNome(usuario.getNome());
+        userToEdit.setEmail(usuario.getEmail());
+        userToEdit.setSenha(usuario.getSenha());
+        return userToEdit;
+    }
+
+
+    /*@Transactional(readOnly = true)
+    public void delete(Usuario userToDelete2) {
+        Optional<Usuario> userToDelete = usuarioRepository.findById(userToDelete2);
+        usuarioRepository.delete(userToDelete);
+    }*/
 }

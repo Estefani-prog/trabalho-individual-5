@@ -5,6 +5,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+
 @Entity // Pra dizer quer é uma estrutura de dados
 public class Usuario {
     @Id // primary key, chave primária da tabela
