@@ -1,5 +1,6 @@
 package com.estefanibonifacio.api.controllers;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,9 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController // função que faz com que a classe seja um controlador rest (crud mvc)
 @RequestMapping("/usuarios") // url base para acessar os métodos
@@ -37,14 +40,22 @@ public class UsuarioController {
         return ResponseEntity.ok().body(usuario);
     }
 
-    @PostMapping("/editar/{id}")
+    @PutMapping("/editar/{id}")
+    public ResponseEntity<Usuario> edit(@PathVariable Long id, @RequestBody Usuario usuario) {
+        usuario = usuarioService.edit(id, usuario);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(usuario.getId()).toUri();
+
+        return ResponseEntity.created(uri).body(usuario);
+    }
+
+    /*@PutMapping("/editar/{id}")
     public ResponseEntity<Usuario> edit(@PathVariable Long id,@RequestBody Usuario usuario) {
         Usuario userToEdit = usuarioService.findById(id);
         userToEdit.setNome(usuario.getNome());
         userToEdit.setEmail(usuario.getEmail());
         userToEdit.setSenha(usuario.getSenha());
         return ResponseEntity.ok().body(userToEdit);
-    }
+    }*/
 
   /*@PostMapping("/excluir")
     public ResponseEntity<Usuario> delete(@RequestBody Usuario usuario) {

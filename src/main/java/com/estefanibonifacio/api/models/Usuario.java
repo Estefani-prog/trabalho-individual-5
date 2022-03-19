@@ -24,6 +24,12 @@ public class Usuario {
         this.senha = senha;
         this.urlAvatar = urlAvatar;
     }
+    public Usuario(Usuario usuario) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.urlAvatar = urlAvatar;
+    }
     public Long getId() {
         return id;
     }

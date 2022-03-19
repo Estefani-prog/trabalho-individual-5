@@ -26,8 +26,8 @@ public class UsuarioService {
     @Transactional
     public void save(Usuario usuario) {
         usuarioRepository.save(usuario);
-
     }
+
     @Transactional
     public Usuario findById(Long usuario) {
         Optional<Usuario> user = usuarioRepository.findById(usuario); 
@@ -35,12 +35,16 @@ public class UsuarioService {
     }
 
     @Transactional
-    public Usuario edit(Usuario usuario) {
-        Usuario userToEdit = findById(usuario.getId()); 
+    public Usuario edit(Long id, Usuario usuario) {
+        Usuario userToEdit = usuarioRepository.getOne(id); 
+
         userToEdit.setNome(usuario.getNome());
         userToEdit.setEmail(usuario.getEmail());
         userToEdit.setSenha(usuario.getSenha());
-        return userToEdit;
+
+        userToEdit = usuarioRepository.save(userToEdit);
+
+        return new Usuario(userToEdit);
     }
 
 

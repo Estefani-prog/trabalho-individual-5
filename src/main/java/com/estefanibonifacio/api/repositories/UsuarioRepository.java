@@ -10,7 +10,6 @@ import com.estefanibonifacio.api.models.Usuario;
 @Repository                              // Classe, Tipo do primary key
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
-    //Optional<Usuario> findById(Usuario usuario);
 
     /*void delete(Optional<Usuario> userToDelete);*/
 
